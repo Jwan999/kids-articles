@@ -10,7 +10,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::withCount('articles')->get();
+        $categories = Category::withCount('issdarat')->get();
 
         return Inertia::render('Admin/Categories/Index', [
             'categories' => $categories,
@@ -45,8 +45,8 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
 
-        if ($category->articles()->count() > 0) {
-            return redirect()->back()->with('error', 'لا يمكن حذف تصنيف مرتبط بمقالات.');
+        if ($category->issdarat()->count() > 0) {
+            return redirect()->back()->with('error', 'لا يمكن حذف تصنيف مرتبط بإصدارات.');
         }
 
         $category->delete();

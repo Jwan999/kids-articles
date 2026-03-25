@@ -49,8 +49,8 @@ function saveEdit(category) {
 }
 
 function deleteCategory(category) {
-    if (category.articles_count > 0) {
-        alert('Cannot delete a category that has pages. Please remove the pages first.')
+    if (category.issdarat_count > 0) {
+        alert('Cannot delete a category that has issdarat. Please remove the issdarat first.')
         return
     }
     router.delete(`/admin/categories/${category.id}`, {
@@ -103,7 +103,7 @@ function deleteCategory(category) {
                         <div class="flex-1">
                             <span class="text-lg font-semibold text-neutral-800">{{ category.name }}</span>
                             <span class="ml-2 text-base text-neutral-400">
-                                ({{ category.articles_count }} {{ category.articles_count === 1 ? 'page' : 'pages' }})
+                                ({{ category.issdarat_count }} {{ category.issdarat_count === 1 ? 'issdar' : 'issdarat' }})
                             </span>
                         </div>
                         <div class="flex items-center gap-2">
@@ -117,10 +117,10 @@ function deleteCategory(category) {
                             <button
                                 @click="deleteCategory(category)"
                                 class="p-2 rounded-full transition"
-                                :class="category.articles_count > 0
+                                :class="category.issdarat_count > 0
                                     ? 'text-neutral-300 cursor-not-allowed'
                                     : 'text-red-500 hover:bg-red-50'"
-                                :title="category.articles_count > 0 ? 'Cannot delete - has pages' : 'Delete'"
+                                :title="category.issdarat_count > 0 ? 'Cannot delete - has issdarat' : 'Delete'"
                             >
                                 <PhTrash :size="20" />
                             </button>

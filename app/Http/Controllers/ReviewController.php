@@ -10,7 +10,7 @@ class ReviewController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'article_id' => 'required|exists:articles,id',
+            'issdar_id' => 'required|exists:issdarat,id',
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'rating' => 'required|integer|min:1|max:5',
@@ -19,16 +19,16 @@ class ReviewController extends Controller
 
         $ipAddress = $request->ip();
 
-        $existingReview = Review::where('article_id', $validated['article_id'])
+        $existingReview = Review::where('issdar_id', $validated['issdar_id'])
             ->where('ip_address', $ipAddress)
             ->first();
 
         if ($existingReview) {
-            return redirect()->back()->with('error', 'لقد قمت بتقييم هذا المقال مسبقاً.');
+            return redirect()->back()->with('error', 'لقد قمت بتقييم هذا الإصدار مسبقاً.');
         }
 
         Review::create([
-            'article_id' => $validated['article_id'],
+            'issdar_id' => $validated['issdar_id'],
             'name' => $validated['name'],
             'email' => $validated['email'],
             'rating' => $validated['rating'],

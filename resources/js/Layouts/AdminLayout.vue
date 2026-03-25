@@ -18,7 +18,7 @@ const currentUrl = computed(() => page.url);
 
 const navLinks = [
     { label: 'Dashboard', href: '/admin', icon: PhSquaresFour },
-    { label: 'Pages', href: '/admin/articles', icon: PhArticle },
+    { label: 'Issdarat', href: '/admin/issdarat', icon: PhArticle },
     { label: 'Categories', href: '/admin/categories', icon: PhFolders },
     { label: 'Banners', href: '/admin/banners', icon: PhImage },
 ];

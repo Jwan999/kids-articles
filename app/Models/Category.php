@@ -9,8 +9,8 @@ class Category extends Model
 {
     protected $fillable = ['name'];
 
-    public function articles(): BelongsToMany
+    public function issdarat(): BelongsToMany
     {
-        return $this->belongsToMany(Article::class);
+        return $this->belongsToMany(Issdar::class, 'issdar_category');
     }
 }

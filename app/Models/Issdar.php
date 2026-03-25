@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Article extends Model
+class Issdar extends Model
 {
+    protected $table = 'issdarat';
+
     protected $fillable = [
         'title', 'description', 'thumbnail_path', 'file_path',
         'views', 'downloads', 'link', 'release_date',
@@ -23,7 +25,7 @@ class Article extends Model
 
     public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Category::class, 'issdar_category');
     }
 
     public function reviews(): HasMany

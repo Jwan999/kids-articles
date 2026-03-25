@@ -4,22 +4,22 @@ import { Link } from '@inertiajs/vue3';
 import { PhEye, PhDownloadSimple, PhStar, PhArticle } from '@phosphor-icons/vue';
 
 const props = defineProps({
-    article: {
+    issdar: {
         type: Object,
         required: true,
     },
 });
 
-const rating = computed(() => props.article.average_rating ?? 0);
+const rating = computed(() => props.issdar.average_rating ?? 0);
 
 const publishYear = computed(() => {
-    if (!props.article.release_date) return null;
-    return new Date(props.article.release_date).getFullYear();
+    if (!props.issdar.release_date) return null;
+    return new Date(props.issdar.release_date).getFullYear();
 });
 
 const formattedDate = computed(() => {
-    if (!props.article.release_date) return null;
-    return new Date(props.article.release_date).toLocaleDateString('en-US', {
+    if (!props.issdar.release_date) return null;
+    return new Date(props.issdar.release_date).toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
@@ -29,15 +29,15 @@ const formattedDate = computed(() => {
 
 <template>
     <Link
-        :href="`/article/${article.id}`"
+        :href="`/issdar/${issdar.id}`"
         class="group bg-white rounded-3xl border-2 border-accent-200 shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer overflow-hidden h-full flex flex-col"
     >
         <!-- Thumbnail -->
         <div class="relative aspect-[210/297] bg-neutral-100 overflow-hidden">
             <img
-                v-if="article.thumbnail_url"
-                :src="article.thumbnail_url"
-                :alt="article.title"
+                v-if="issdar.thumbnail_url"
+                :src="issdar.thumbnail_url"
+                :alt="issdar.title"
                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
             <div v-else class="w-full h-full flex items-center justify-center bg-accent-50">
@@ -65,7 +65,7 @@ const formattedDate = computed(() => {
         <div class="p-5 flex-1 flex flex-col">
             <!-- Title -->
             <h3 class="text-xl font-bold text-neutral-800 mb-3 line-clamp-2">
-                {{ article.title }}
+                {{ issdar.title }}
             </h3>
 
             <!-- Date -->
@@ -91,18 +91,18 @@ const formattedDate = computed(() => {
             <div class="flex items-center gap-4 text-neutral-500 text-base mb-3">
                 <span class="flex items-center gap-1">
                     <PhEye :size="16" />
-                    {{ article.views ?? 0 }}
+                    {{ issdar.views ?? 0 }}
                 </span>
                 <span class="flex items-center gap-1">
                     <PhDownloadSimple :size="16" />
-                    {{ article.downloads ?? 0 }}
+                    {{ issdar.downloads ?? 0 }}
                 </span>
             </div>
 
             <!-- Categories -->
-            <div v-if="article.categories?.length" class="flex flex-wrap gap-1.5 mt-auto">
+            <div v-if="issdar.categories?.length" class="flex flex-wrap gap-1.5 mt-auto">
                 <span
-                    v-for="category in article.categories"
+                    v-for="category in issdar.categories"
                     :key="category.id"
                     class="bg-secondary-100 text-secondary-700 rounded-full px-3 py-1 text-sm font-semibold"
                 >

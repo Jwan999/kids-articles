@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Article;
+use App\Models\Issdar;
 use App\Models\Banner;
 use App\Models\BannerGroup;
 use App\Models\Category;
@@ -29,8 +29,8 @@ class DatabaseSeeder extends Seeder
             'الذكاء الاصطناعي', 'إنترنت الأشياء', 'الطاقة المتجددة', 'الفضاء',
         ])->map(fn ($name) => Category::create(['name' => $name]));
 
-        // Articles
-        $articles = [
+        // Issdarat
+        $issdarat = [
             [
                 'title' => 'مقدمة في عالم الروبوتات للأطفال',
                 'description' => 'تعرف على عالم الروبوتات المثير! في هذا المقال سنأخذك في رحلة ممتعة لاكتشاف كيف تعمل الروبوتات وكيف يمكنك بناء روبوتك الأول. سنتعلم عن المحركات والمستشعرات والمتحكمات الدقيقة بطريقة سهلة وبسيطة.',
@@ -129,12 +129,12 @@ class DatabaseSeeder extends Seeder
             ],
         ];
 
-        foreach ($articles as $data) {
+        foreach ($issdarat as $data) {
             $categoryIds = $data['category_ids'];
             unset($data['category_ids']);
 
-            $article = Article::create($data);
-            $article->categories()->attach($categoryIds);
+            $issdar = Issdar::create($data);
+            $issdar->categories()->attach($categoryIds);
         }
 
         // Reviews
@@ -161,13 +161,13 @@ class DatabaseSeeder extends Seeder
         ];
 
         $ipCounter = 1;
-        foreach (Article::all() as $article) {
+        foreach (Issdar::all() as $issdar) {
             $numReviews = rand(2, 5);
             $shuffled = collect($reviewers)->shuffle()->take($numReviews);
 
             foreach ($shuffled as $i => $reviewer) {
                 Review::create([
-                    'article_id' => $article->id,
+                    'issdar_id' => $issdar->id,
                     'name' => $reviewer['name'],
                     'email' => $reviewer['email'],
                     'rating' => rand(3, 5),
@@ -182,21 +182,21 @@ class DatabaseSeeder extends Seeder
             Banner::create([
                 'title' => 'اكتشف عالم الروبوتات',
                 'subtitle' => 'مقالات تعليمية ممتعة للأطفال',
-                'link' => '/article/1',
+                'link' => '/issdar/1',
                 'image_path' => 'banners/placeholder.jpg',
                 'is_active' => true,
             ]),
             Banner::create([
                 'title' => 'تعلم البرمجة بسهولة',
                 'subtitle' => 'ابدأ رحلتك مع سكراتش وبايثون',
-                'link' => '/article/2',
+                'link' => '/issdar/2',
                 'image_path' => 'banners/placeholder.jpg',
                 'is_active' => true,
             ]),
             Banner::create([
                 'title' => 'مشاريع إلكترونية للمبدعين',
                 'subtitle' => 'حوّل أفكارك إلى حقيقة',
-                'link' => '/article/6',
+                'link' => '/issdar/6',
                 'image_path' => 'banners/placeholder.jpg',
                 'is_active' => true,
             ]),

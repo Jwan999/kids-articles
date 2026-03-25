@@ -1,7 +1,7 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3'
 import PublicLayout from '@/Layouts/PublicLayout.vue'
-import ArticleCard from '@/Components/ArticleCard.vue'
+import IssdarCard from '@/Components/IssdarCard.vue'
 import StarRating from '@/Components/StarRating.vue'
 import ReviewForm from '@/Components/ReviewForm.vue'
 import {
@@ -20,15 +20,15 @@ import { computed, ref } from 'vue'
 defineOptions({ layout: PublicLayout })
 
 const props = defineProps({
-    article: { type: Object, required: true },
-    relatedArticles: { type: Array, default: () => [] },
+    issdar: { type: Object, required: true },
+    relatedIssdarat: { type: Array, default: () => [] },
 })
 
 const showReviewForm = ref(false)
 
 const formattedDate = computed(() => {
-    if (!props.article.release_date) return ''
-    return new Date(props.article.release_date).toLocaleDateString('en-US', {
+    if (!props.issdar.release_date) return ''
+    return new Date(props.issdar.release_date).toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
@@ -36,37 +36,37 @@ const formattedDate = computed(() => {
 })
 
 const averageRating = computed(() => {
-    const reviews = props.article.reviews || []
+    const reviews = props.issdar.reviews || []
     if (!reviews.length) return 0
     const sum = reviews.reduce((acc, r) => acc + r.rating, 0)
     return (sum / reviews.length).toFixed(1)
 })
 
-const reviewsList = computed(() => props.article.reviews || [])
+const reviewsList = computed(() => props.issdar.reviews || [])
 </script>
 
 <template>
-    <Head :title="article.title" />
+    <Head :title="issdar.title" />
 
     <div class="min-h-screen bg-neutral-100">
         <div class="max-w-7xl mx-auto px-6 py-8">
 
-            <!-- Article Header Card -->
+            <!-- Issdar Header Card -->
             <div class="bg-white rounded-3xl border-2 border-accent-200 shadow-md p-8">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <!-- Image -->
                     <div class="flex justify-center">
                         <div class="w-full max-w-md aspect-[210/297] bg-neutral-50 rounded-2xl border-2 border-neutral-200 overflow-hidden">
                             <img
-                                v-if="article.thumbnail_url"
-                                :src="article.thumbnail_url"
-                                :alt="article.title"
+                                v-if="issdar.thumbnail_url"
+                                :src="issdar.thumbnail_url"
+                                :alt="issdar.title"
                                 class="w-full h-full object-cover"
                                 @error="$event.target.style.display='none'; $event.target.nextElementSibling.style.display='flex'"
                             />
                             <div
                                 class="w-full h-full bg-accent-50 flex items-center justify-center"
-                                :style="article.thumbnail_url ? 'display:none' : ''"
+                                :style="issdar.thumbnail_url ? 'display:none' : ''"
                             >
                                 <PhFilePdf :size="64" weight="thin" class="text-neutral-500" />
                             </div>
@@ -76,13 +76,13 @@ const reviewsList = computed(() => props.article.reviews || [])
                     <!-- Info side -->
                     <div class="flex flex-col h-full">
                         <h1 class="text-3xl font-bold text-neutral-800 mb-4">
-                            {{ article.title }}
+                            {{ issdar.title }}
                         </h1>
 
                         <!-- Categories as badges -->
-                        <div v-if="article.categories?.length" class="flex flex-wrap gap-2 mb-4">
+                        <div v-if="issdar.categories?.length" class="flex flex-wrap gap-2 mb-4">
                             <span
-                                v-for="cat in article.categories"
+                                v-for="cat in issdar.categories"
                                 :key="cat.id"
                                 class="inline-flex items-center gap-1.5 bg-accent-100 text-accent-700 rounded-full px-4 py-1.5 text-base font-semibold border border-accent-200"
                             >
@@ -99,11 +99,11 @@ const reviewsList = computed(() => props.article.reviews || [])
                             </div>
                             <span class="flex items-center gap-1">
                                 <PhEye :size="18" />
-                                {{ article.views ?? 0 }} views
+                                {{ issdar.views ?? 0 }} views
                             </span>
                             <span class="flex items-center gap-1">
                                 <PhDownloadSimple :size="18" />
-                                {{ article.downloads ?? 0 }} downloads
+                                {{ issdar.downloads ?? 0 }} downloads
                             </span>
                         </div>
 
@@ -115,24 +115,24 @@ const reviewsList = computed(() => props.article.reviews || [])
 
                         <!-- About section -->
                         <div class="mb-6 flex-1">
-                            <h3 class="text-xl font-semibold text-neutral-800 mb-2">About This Page</h3>
+                            <h3 class="text-xl font-semibold text-neutral-800 mb-2">About This Issdar</h3>
                             <p class="text-lg text-neutral-600 leading-relaxed whitespace-pre-line">
-                                {{ article.description }}
+                                {{ issdar.description }}
                             </p>
                         </div>
 
                         <!-- Action buttons -->
                         <div class="flex gap-3 justify-end mt-auto">
                             <a
-                                :href="'/article/' + article.id + '/download'"
+                                :href="'/issdar/' + issdar.id + '/download'"
                                 class="bg-primary-500 text-neutral-800 rounded-full p-3 transition-all hover:shadow-lg"
                                 title="Download"
                             >
                                 <PhDownloadSimple :size="22" weight="bold" />
                             </a>
                             <a
-                                v-if="article.link"
-                                :href="article.link"
+                                v-if="issdar.link"
+                                :href="issdar.link"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 class="bg-accent-500 text-white rounded-full p-3 transition-all hover:shadow-lg"
@@ -164,7 +164,7 @@ const reviewsList = computed(() => props.article.reviews || [])
 
                 <!-- Review Form (toggle) -->
                 <div v-if="showReviewForm" class="mb-6 p-6 bg-neutral-100 rounded-3xl border-2 border-neutral-200">
-                    <ReviewForm :article-id="article.id" />
+                    <ReviewForm :issdar-id="issdar.id" />
                 </div>
 
                 <!-- Reviews List -->
@@ -201,14 +201,14 @@ const reviewsList = computed(() => props.article.reviews || [])
                 </div>
             </div>
 
-            <!-- Related Articles -->
-            <section v-if="relatedArticles.length" class="mt-8">
-                <h2 class="text-2xl font-bold text-neutral-800 mb-6">Related Pages</h2>
+            <!-- Related Issdarat -->
+            <section v-if="relatedIssdarat.length" class="mt-8">
+                <h2 class="text-2xl font-bold text-neutral-800 mb-6">Related Issdarat</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                    <ArticleCard
-                        v-for="related in relatedArticles"
+                    <IssdarCard
+                        v-for="related in relatedIssdarat"
                         :key="related.id"
-                        :article="related"
+                        :issdar="related"
                     />
                 </div>
             </section>

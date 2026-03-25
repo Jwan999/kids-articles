@@ -4,14 +4,14 @@ import { PhPaperPlaneRight } from '@phosphor-icons/vue';
 import StarRating from '@/Components/StarRating.vue';
 
 const props = defineProps({
-    articleId: {
+    issdarId: {
         type: [Number, String],
         required: true,
     },
 });
 
 const form = useForm({
-    article_id: props.articleId,
+    issdar_id: props.issdarId,
     name: '',
     email: '',
     rating: 0,

@@ -14,7 +14,7 @@ const form = useForm({
     title: '',
     description: '',
     thumbnail: null,
-    article_file: null,
+    file: null,
     link: '',
     release_date: '',
     categories: [],
@@ -39,13 +39,13 @@ function removeThumbnail() {
 function handleFile(e) {
     const file = e.target.files[0]
     if (file) {
-        form.article_file = file
+        form.file = file
         fileName.value = file.name
     }
 }
 
 function removeFile() {
-    form.article_file = null
+    form.file = null
     fileName.value = ''
 }
 
@@ -59,20 +59,20 @@ function toggleCategory(categoryId) {
 }
 
 function submit() {
-    form.post('/admin/articles', {
+    form.post('/admin/issdarat', {
         forceFormData: true,
     })
 }
 </script>
 
 <template>
-    <Head title="Create New Page" />
+    <Head title="Create New Issdar" />
 
     <div class="max-w-3xl mx-auto space-y-6">
         <div class="flex items-center justify-between">
-            <h1 class="text-2xl font-bold text-neutral-800">Create New Page</h1>
+            <h1 class="text-2xl font-bold text-neutral-800">Create New Issdar</h1>
             <Link
-                :href="'/admin/articles'"
+                :href="'/admin/issdarat'"
                 class="text-neutral-500 hover:text-neutral-800 font-semibold text-lg rounded-full px-6 py-2 transition-all hover:bg-neutral-100"
             >
                 Cancel
@@ -87,7 +87,7 @@ function submit() {
                     v-model="form.title"
                     type="text"
                     class="w-full px-5 py-3 text-lg rounded-xl border-2 border-[#F0F0F0] focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition min-h-[52px]"
-                    placeholder="Page title"
+                    placeholder="Issdar title"
                 />
                 <p v-if="form.errors.title" class="mt-1 text-base text-red-500">{{ form.errors.title }}</p>
             </div>
@@ -99,7 +99,7 @@ function submit() {
                     v-model="form.description"
                     rows="6"
                     class="w-full px-5 py-3 text-lg rounded-xl border-2 border-[#F0F0F0] focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition resize-y"
-                    placeholder="Page description..."
+                    placeholder="Issdar description..."
                 ></textarea>
                 <p v-if="form.errors.description" class="mt-1 text-base text-red-500">{{ form.errors.description }}</p>
             </div>
@@ -127,9 +127,9 @@ function submit() {
                 <p v-if="form.errors.thumbnail" class="mt-1 text-base text-red-500">{{ form.errors.thumbnail }}</p>
             </div>
 
-            <!-- Article File -->
+            <!-- Issdar File -->
             <div>
-                <label class="block text-lg font-semibold text-neutral-800 mb-2">Page File (PDF)</label>
+                <label class="block text-lg font-semibold text-neutral-800 mb-2">Issdar File (PDF)</label>
                 <div v-if="fileName" class="mb-3 flex items-center gap-2 text-lg text-neutral-600 bg-neutral-50 px-5 py-3 rounded-xl border-2 border-neutral-200">
                     <span>{{ fileName }}</span>
                     <button type="button" @click="removeFile" class="text-red-500 hover:text-red-600">
@@ -143,7 +143,7 @@ function submit() {
                     <span class="text-neutral-500">Choose a PDF file</span>
                     <input type="file" accept=".pdf" class="hidden" @change="handleFile" />
                 </label>
-                <p v-if="form.errors.article_file" class="mt-1 text-base text-red-500">{{ form.errors.article_file }}</p>
+                <p v-if="form.errors.file" class="mt-1 text-base text-red-500">{{ form.errors.file }}</p>
             </div>
 
             <!-- Link -->
@@ -198,7 +198,7 @@ function submit() {
             <!-- Actions -->
             <div class="flex items-center justify-end gap-4 pt-4 border-t-2 border-neutral-200">
                 <Link
-                    :href="'/admin/articles'"
+                    :href="'/admin/issdarat'"
                     class="rounded-full px-8 py-3 text-neutral-600 hover:text-neutral-800 font-semibold text-lg transition-all hover:bg-neutral-100 min-h-[44px]"
                 >
                     Cancel

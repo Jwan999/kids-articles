@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Review extends Model
 {
-    protected $fillable = ['article_id', 'name', 'email', 'rating', 'review', 'ip_address'];
+    protected $fillable = ['issdar_id', 'name', 'email', 'rating', 'review', 'ip_address'];
 
     protected $casts = [
         'rating' => 'integer',
     ];
 
-    public function article(): BelongsTo
+    public function issdar(): BelongsTo
     {
-        return $this->belongsTo(Article::class);
+        return $this->belongsTo(Issdar::class);
     }
 }

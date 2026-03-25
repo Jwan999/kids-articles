@@ -2,7 +2,7 @@
 import { Head, router } from '@inertiajs/vue3'
 import PublicLayout from '@/Layouts/PublicLayout.vue'
 import BannerCarousel from '@/Components/BannerCarousel.vue'
-import ArticleCard from '@/Components/ArticleCard.vue'
+import IssdarCard from '@/Components/IssdarCard.vue'
 import {
     PhSparkle,
     PhArticle,
@@ -16,8 +16,8 @@ defineOptions({ layout: PublicLayout })
 
 const props = defineProps({
     banners: { type: Array, default: () => [] },
-    latestArticles: { type: Array, default: () => [] },
-    popularArticles: { type: Array, default: () => [] },
+    latestIssdarat: { type: Array, default: () => [] },
+    popularIssdarat: { type: Array, default: () => [] },
     categories: { type: Array, default: () => [] },
     stats: { type: Object, default: () => ({}) },
 })
@@ -34,10 +34,10 @@ function filterByCategory(categoryId) {
     })
 }
 
-const allArticles = computed(() => {
+const allIssdarat = computed(() => {
     const seen = new Set()
     const combined = []
-    for (const a of [...props.latestArticles, ...props.popularArticles]) {
+    for (const a of [...props.latestIssdarat, ...props.popularIssdarat]) {
         if (!seen.has(a.id)) {
             seen.add(a.id)
             combined.push(a)
@@ -60,7 +60,7 @@ const allArticles = computed(() => {
         <section class="py-16 px-6 text-center">
             <div class="max-w-7xl mx-auto">
                 <h1 class="text-4xl sm:text-5xl font-bold text-neutral-800 mb-4">
-                    Discover Our Latest Pages
+                    Discover Our Latest Issdarat
                 </h1>
             </div>
         </section>
@@ -71,9 +71,9 @@ const allArticles = computed(() => {
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
                     <div>
                         <div class="text-3xl md:text-4xl font-bold text-primary-500">
-                            {{ stats.totalArticles ?? 0 }}
+                            {{ stats.totalIssdarat ?? 0 }}
                         </div>
-                        <div class="text-lg text-neutral-500">Pages</div>
+                        <div class="text-lg text-neutral-500">Issdarat</div>
                     </div>
                     <div>
                         <div class="text-3xl md:text-4xl font-bold text-primary-500">
@@ -101,7 +101,7 @@ const allArticles = computed(() => {
         <section class="py-12 px-6">
             <div class="max-w-7xl mx-auto">
                 <h2 class="text-3xl font-bold text-neutral-800 text-center mb-8">
-                    Browse Pages
+                    Browse Issdarat
                 </h2>
 
                 <!-- Category filter pills -->
@@ -126,23 +126,23 @@ const allArticles = computed(() => {
                     >
                         {{ category.name }}
                         <span
-                            v-if="category.articles_count != null"
+                            v-if="category.issdarat_count != null"
                             class="ml-1 text-base opacity-70"
                         >
-                            ({{ category.articles_count }})
+                            ({{ category.issdarat_count }})
                         </span>
                     </button>
                 </div>
 
-                <!-- Articles Grid -->
+                <!-- Issdarat Grid -->
                 <div
-                    v-if="allArticles.length"
+                    v-if="allIssdarat.length"
                     class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
                 >
-                    <ArticleCard
-                        v-for="article in allArticles"
-                        :key="article.id"
-                        :article="article"
+                    <IssdarCard
+                        v-for="issdar in allIssdarat"
+                        :key="issdar.id"
+                        :issdar="issdar"
                     />
                 </div>
 
@@ -150,7 +150,7 @@ const allArticles = computed(() => {
                 <div v-else class="py-16 text-center">
                     <PhArticle :size="48" weight="thin" class="mx-auto mb-4 text-neutral-500" />
                     <p class="text-lg text-neutral-500">
-                        No pages available
+                        No issdarat available
                     </p>
                 </div>
             </div>

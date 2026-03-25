@@ -6,12 +6,12 @@ import { PhArticle, PhEye, PhDownloadSimple, PhChatDots, PhStar } from '@phospho
 defineOptions({ layout: AdminLayout })
 
 const props = defineProps({
-    totalArticles: { type: Number, default: 0 },
+    totalIssdarat: { type: Number, default: 0 },
     totalViews: { type: Number, default: 0 },
     totalDownloads: { type: Number, default: 0 },
     totalReviews: { type: Number, default: 0 },
     averageRating: { type: Number, default: 0 },
-    latestArticles: { type: Array, default: () => [] },
+    latestIssdarat: { type: Array, default: () => [] },
     latestReviews: { type: Array, default: () => [] },
     categoriesCount: { type: Number, default: 0 },
 })
@@ -31,8 +31,8 @@ function truncate(text, length = 80) {
 
 const statsCards = [
     {
-        label: 'Total Pages',
-        key: 'totalArticles',
+        label: 'Total Issdarat',
+        key: 'totalIssdarat',
         icon: PhArticle,
         bgColor: 'bg-primary-100',
         iconColor: 'text-primary-600',
@@ -102,12 +102,12 @@ const statsCards = [
             </div>
         </div>
 
-        <!-- Latest Articles -->
+        <!-- Latest Issdarat -->
         <div class="bg-white rounded-3xl border-2 border-neutral-200 shadow-md overflow-hidden">
             <div class="p-6 border-b-2 border-neutral-200">
                 <div class="flex items-center justify-between">
-                    <h2 class="text-xl font-bold text-neutral-800">Latest Pages</h2>
-                    <Link href="/admin/articles" class="text-lg text-accent-600 hover:text-accent-700 font-semibold">
+                    <h2 class="text-xl font-bold text-neutral-800">Latest Issdarat</h2>
+                    <Link href="/admin/issdarat" class="text-lg text-accent-600 hover:text-accent-700 font-semibold">
                         View All
                     </Link>
                 </div>
@@ -124,22 +124,22 @@ const statsCards = [
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-neutral-100">
-                        <tr v-for="article in latestArticles" :key="article.id" class="hover:bg-neutral-50 transition">
-                            <td class="px-6 py-4 font-semibold text-neutral-800">{{ article.title }}</td>
-                            <td class="px-4 py-4 text-center text-neutral-600">{{ article.views?.toLocaleString('en-US') ?? 0 }}</td>
-                            <td class="px-4 py-4 text-center text-neutral-600">{{ article.downloads?.toLocaleString('en-US') ?? 0 }}</td>
-                            <td class="px-4 py-4 text-center text-neutral-500">{{ formatDate(article.created_at) }}</td>
+                        <tr v-for="issdar in latestIssdarat" :key="issdar.id" class="hover:bg-neutral-50 transition">
+                            <td class="px-6 py-4 font-semibold text-neutral-800">{{ issdar.title }}</td>
+                            <td class="px-4 py-4 text-center text-neutral-600">{{ issdar.views?.toLocaleString('en-US') ?? 0 }}</td>
+                            <td class="px-4 py-4 text-center text-neutral-600">{{ issdar.downloads?.toLocaleString('en-US') ?? 0 }}</td>
+                            <td class="px-4 py-4 text-center text-neutral-500">{{ formatDate(issdar.created_at) }}</td>
                             <td class="px-4 py-4 text-center">
                                 <Link
-                                    :href="`/admin/articles/${article.id}/edit`"
+                                    :href="`/admin/issdarat/${issdar.id}/edit`"
                                     class="text-accent-600 hover:text-accent-700 font-semibold"
                                 >
                                     Edit
                                 </Link>
                             </td>
                         </tr>
-                        <tr v-if="!latestArticles.length">
-                            <td colspan="5" class="px-6 py-8 text-center text-neutral-400 text-lg">No pages yet</td>
+                        <tr v-if="!latestIssdarat.length">
+                            <td colspan="5" class="px-6 py-8 text-center text-neutral-400 text-lg">No issdarat yet</td>
                         </tr>
                     </tbody>
                 </table>
@@ -158,7 +158,7 @@ const statsCards = [
                             <div class="flex items-center gap-3 mb-2">
                                 <span class="text-lg font-bold text-neutral-800">{{ review.name }}</span>
                                 <span class="text-neutral-400">|</span>
-                                <span class="text-base text-neutral-500">{{ review.article?.title }}</span>
+                                <span class="text-base text-neutral-500">{{ review.issdar?.title }}</span>
                             </div>
                             <div class="flex items-center gap-1 mb-2">
                                 <PhStar

@@ -2,37 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Article;
+use App\Models\Issdar;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
-class ArticleController extends Controller
+class IssdarController extends Controller
 {
     public function show($id)
     {
-        $article = Article::with(['categories', 'reviews'])->findOrFail($id);
-        $article->increment('views');
+        $issdar = Issdar::with(['categories', 'reviews'])->findOrFail($id);
+        $issdar->increment('views');
 
-        $categoryIds = $article->categories->pluck('id');
-        $relatedArticles = Article::with('categories')
-            ->where('id', '!=', $article->id)
+        $categoryIds = $issdar->categories->pluck('id');
+        $relatedIssdarat = Issdar::with('categories')
+            ->where('id', '!=', $issdar->id)
             ->whereHas('categories', function ($query) use ($categoryIds) {
                 $query->whereIn('categories.id', $categoryIds);
             })
             ->take(4)
             ->get();
 
-        return Inertia::render('Article', [
-            'article' => $article,
-            'relatedArticles' => $relatedArticles,
+        return Inertia::render('Issdar', [
+            'issdar' => $issdar,
+            'relatedIssdarat' => $relatedIssdarat,
         ]);
     }
 
     public function index(Request $request)
     {
-        $query = Article::with('categories');
+        $query = Issdar::with('categories');
 
         if ($request->filled('category')) {
             $query->whereHas('categories', function ($q) use ($request) {
@@ -68,11 +68,11 @@ class ArticleController extends Controller
                 break;
         }
 
-        $articles = $query->paginate(15)->withQueryString();
+        $issdarat = $query->paginate(15)->withQueryString();
         $categories = Category::all();
 
-        return Inertia::render('Admin/Articles/Index', [
-            'articles' => $articles,
+        return Inertia::render('Admin/Issdarat/Index', [
+            'issdarat' => $issdarat,
             'categories' => $categories,
             'filters' => $request->only(['search', 'category', 'sort']),
         ]);
@@ -82,7 +82,7 @@ class ArticleController extends Controller
     {
         $categories = Category::all();
 
-        return Inertia::render('Admin/Articles/Create', [
+        return Inertia::render('Admin/Issdarat/Create', [
             'categories' => $categories,
         ]);
     }
@@ -101,9 +101,9 @@ class ArticleController extends Controller
         ]);
 
         $thumbnailPath = $request->file('thumbnail')->store('thumbnails', 'public');
-        $filePath = $request->file('file')->store('articles', 'public');
+        $filePath = $request->file('file')->store('issdarat', 'public');
 
-        $article = Article::create([
+        $issdar = Issdar::create([
             'title' => $validated['title'],
             'description' => $validated['description'],
             'thumbnail_path' => $thumbnailPath,
@@ -115,26 +115,26 @@ class ArticleController extends Controller
         ]);
 
         if (!empty($validated['categories'])) {
-            $article->categories()->attach($validated['categories']);
+            $issdar->categories()->attach($validated['categories']);
         }
 
-        return redirect()->route('admin.articles.index')->with('success', 'تم إنشاء المقال بنجاح.');
+        return redirect()->route('admin.issdarat.index')->with('success', 'تم إنشاء الإصدار بنجاح.');
     }
 
     public function edit($id)
     {
-        $article = Article::with('categories')->findOrFail($id);
+        $issdar = Issdar::with('categories')->findOrFail($id);
         $categories = Category::all();
 
-        return Inertia::render('Admin/Articles/Edit', [
-            'article' => $article,
+        return Inertia::render('Admin/Issdarat/Edit', [
+            'issdar' => $issdar,
             'categories' => $categories,
         ]);
     }
 
     public function update(Request $request, $id)
     {
-        $article = Article::findOrFail($id);
+        $issdar = Issdar::findOrFail($id);
 
         $validated = $request->validate([
             'title' => 'required|string|max:255',
@@ -155,44 +155,44 @@ class ArticleController extends Controller
         ];
 
         if ($request->hasFile('thumbnail')) {
-            Storage::disk('public')->delete($article->thumbnail_path);
+            Storage::disk('public')->delete($issdar->thumbnail_path);
             $data['thumbnail_path'] = $request->file('thumbnail')->store('thumbnails', 'public');
         }
 
         if ($request->hasFile('file')) {
-            Storage::disk('public')->delete($article->file_path);
-            $data['file_path'] = $request->file('file')->store('articles', 'public');
+            Storage::disk('public')->delete($issdar->file_path);
+            $data['file_path'] = $request->file('file')->store('issdarat', 'public');
         }
 
-        $article->update($data);
+        $issdar->update($data);
 
-        $article->categories()->sync($validated['categories'] ?? []);
+        $issdar->categories()->sync($validated['categories'] ?? []);
 
-        return redirect()->back()->with('success', 'تم تحديث المقال بنجاح.');
+        return redirect()->back()->with('success', 'تم تحديث الإصدار بنجاح.');
     }
 
     public function destroy($id)
     {
-        $article = Article::findOrFail($id);
+        $issdar = Issdar::findOrFail($id);
 
-        if ($article->thumbnail_path) {
-            Storage::disk('public')->delete($article->thumbnail_path);
+        if ($issdar->thumbnail_path) {
+            Storage::disk('public')->delete($issdar->thumbnail_path);
         }
 
-        if ($article->file_path) {
-            Storage::disk('public')->delete($article->file_path);
+        if ($issdar->file_path) {
+            Storage::disk('public')->delete($issdar->file_path);
         }
 
-        $article->delete();
+        $issdar->delete();
 
-        return redirect()->back()->with('success', 'تم حذف المقال بنجاح.');
+        return redirect()->back()->with('success', 'تم حذف الإصدار بنجاح.');
     }
 
     public function download($id)
     {
-        $article = Article::findOrFail($id);
-        $article->increment('downloads');
+        $issdar = Issdar::findOrFail($id);
+        $issdar->increment('downloads');
 
-        return Storage::disk('public')->download($article->file_path, $article->title);
+        return Storage::disk('public')->download($issdar->file_path, $issdar->title);
     }
 }
