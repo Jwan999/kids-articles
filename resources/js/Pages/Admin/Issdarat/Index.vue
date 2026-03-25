@@ -125,8 +125,8 @@ const sortOptions = [
                         <tr v-for="issdar in issdarat.data" :key="issdar.id" class="hover:bg-neutral-50 transition">
                             <td class="px-4 py-3">
                                 <img
-                                    v-if="issdar.thumbnail"
-                                    :src="issdar.thumbnail"
+                                    v-if="issdar.thumbnail_url"
+                                    :src="issdar.thumbnail_url"
                                     :alt="issdar.title"
                                     class="w-12 h-12 rounded-2xl object-cover border-2 border-neutral-200"
                                 />
