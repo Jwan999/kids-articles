@@ -10,7 +10,7 @@ import {
     PhEye,
     PhStar,
 } from '@phosphor-icons/vue'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 defineOptions({ layout: PublicLayout })
 
@@ -22,12 +22,10 @@ const props = defineProps({
     stats: { type: Object, default: () => ({}) },
 })
 
-const selectedCategory = computed(() => {
-    const params = new URLSearchParams(window.location.search)
-    return Number(params.get('category')) || null
-})
+const selectedCategory = ref(Number(new URLSearchParams(window.location.search).get('category')) || null)
 
 function filterByCategory(categoryId) {
+    selectedCategory.value = categoryId
     router.get('/', categoryId ? { category: categoryId } : {}, {
         preserveState: true,
         preserveScroll: true,
