@@ -5,23 +5,30 @@ namespace App\Http\Controllers;
 use App\Models\Issdar;
 use App\Models\BannerGroup;
 use App\Models\Category;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $bannerGroup = BannerGroup::where('is_active', true)->first();
         $banners = $bannerGroup
             ? $bannerGroup->banners()->where('is_active', true)->values()
             : collect();
 
-        $latestIssdarat = Issdar::with('categories')
-            ->latest()
-            ->take(8)
-            ->get();
+        $latestQuery = Issdar::with('categories');
+        $popularQuery = Issdar::with('categories');
 
-        $popularIssdarat = Issdar::with('categories')
+        if ($request->filled('category')) {
+            $categoryId = $request->category;
+            $latestQuery->whereHas('categories', fn ($q) => $q->where('categories.id', $categoryId));
+            $popularQuery->whereHas('categories', fn ($q) => $q->where('categories.id', $categoryId));
+        }
+
+        $latestIssdarat = $latestQuery->latest()->take(8)->get();
+
+        $popularIssdarat = $popularQuery
             ->withAvg('reviews', 'rating')
             ->orderByDesc('reviews_avg_rating')
             ->take(8)
