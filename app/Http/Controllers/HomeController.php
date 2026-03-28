@@ -27,7 +27,7 @@ class HomeController extends Controller
             $popularQuery->whereHas('categories', fn ($q) => $q->where('categories.id', $categoryId));
         }
 
-        $latestIssdarat = $latestQuery->latest()->take(8)->get();
+        $latestIssdarat = $latestQuery->orderByDesc('release_date')->take(8)->get();
 
         $popularIssdarat = $popularQuery
             ->withAvg('reviews', 'rating')

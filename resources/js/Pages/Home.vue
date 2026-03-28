@@ -76,7 +76,7 @@ onUnmounted(() => {
         </section>
 
         <!-- Hero Section -->
-        <section class="py-16 px-6 text-center">
+        <section class="pt-16 pb-4 px-6 text-center">
             <div class="max-w-7xl mx-auto">
                 <h1 class="text-4xl sm:text-5xl font-bold text-neutral-800 mb-4">
                     Discover Our Latest Issdarat
@@ -85,9 +85,9 @@ onUnmounted(() => {
         </section>
 
         <!-- Quick Stats Section -->
-        <section class="py-8 px-6">
-            <div class="max-w-7xl mx-auto">
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-center">
+        <section class="pt-4 pb-16 px-6">
+            <div class="max-w-3xl mx-auto">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-0 text-center">
                     <div>
                         <div class="text-3xl md:text-4xl font-bold text-neutral-800">
                             {{ stats.totalIssdarat ?? 0 }}
@@ -119,10 +119,6 @@ onUnmounted(() => {
         <!-- Browse Section with Filters -->
         <section class="py-12 px-6">
             <div class="max-w-7xl mx-auto">
-                <h2 class="text-3xl font-bold text-neutral-800 text-center mb-8">
-                    Browse Issdarat
-                </h2>
-
                 <!-- Category filter pills -->
                 <div class="flex gap-3 overflow-x-auto pb-4 mb-8 scrollbar-hide" style="-webkit-overflow-scrolling: touch">
                     <button

@@ -66,7 +66,7 @@ function startEdit(banner) {
     editForm.subtitle = banner.subtitle || ''
     editForm.link = banner.link || ''
     editForm.image = null
-    editImagePreview.value = banner.image || null
+    editImagePreview.value = banner.image_url || null
 }
 
 function cancelEdit() {
@@ -120,7 +120,8 @@ function toggleActive(banner) {
 }
 
 // Banner Group (featured banners)
-const selectedBanners = ref([...props.bannerGroups.map(b => b.id)])
+const activeGroup = props.bannerGroups.find(g => g.is_active)
+const selectedBanners = ref(activeGroup?.banner_ids ?? [])
 const savingGroup = ref(false)
 
 function toggleBannerSelection(bannerId) {
@@ -139,7 +140,9 @@ function toggleBannerSelection(bannerId) {
 function saveBannerGroup() {
     savingGroup.value = true
     router.post('/admin/banners/group', {
+        name: 'الرئيسية',
         banner_ids: selectedBanners.value,
+        is_active: true,
     }, {
         preserveScroll: true,
         onFinish: () => {
@@ -318,8 +321,8 @@ function saveBannerGroup() {
                 <template v-else>
                     <div class="relative">
                         <img
-                            v-if="banner.image"
-                            :src="banner.image"
+                            v-if="banner.image_url"
+                            :src="banner.image_url"
                             :alt="banner.title"
                             class="w-full h-40 object-cover"
                         />
@@ -401,8 +404,8 @@ function saveBannerGroup() {
                         : 'border-neutral-200 hover:border-neutral-300'"
                 >
                     <img
-                        v-if="banner.image"
-                        :src="banner.image"
+                        v-if="banner.image_url"
+                        :src="banner.image_url"
                         class="w-16 h-12 rounded-2xl object-cover shrink-0 border-2 border-neutral-200"
                     />
                     <div v-else class="w-16 h-12 rounded-2xl bg-neutral-100 shrink-0 border-2 border-neutral-200"></div>

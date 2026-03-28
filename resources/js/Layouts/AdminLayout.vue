@@ -6,6 +6,7 @@ import {
     PhArticle,
     PhFolders,
     PhImage,
+    PhChatDots,
     PhSignOut,
     PhList,
     PhX,
@@ -20,6 +21,7 @@ const navLinks = [
     { label: 'Dashboard', href: '/admin', icon: PhSquaresFour },
     { label: 'Issdarat', href: '/admin/issdarat', icon: PhArticle },
     { label: 'Categories', href: '/admin/categories', icon: PhFolders },
+    { label: 'Reviews', href: '/admin/reviews', icon: PhChatDots },
     { label: 'Banners', href: '/admin/banners', icon: PhImage },
 ];
 

@@ -63,10 +63,9 @@ const navLinks = [
                         <span class="text-2xl font-bold text-neutral-800">IoT KIDS</span>
                     </Link>
 
-                    <!-- Nav Links + Actions -->
+                    <!-- Nav Links -->
                     <div class="flex items-center gap-3">
-                        <!-- Desktop nav links -->
-                        <nav class="hidden md:flex items-center gap-1 mr-2">
+                        <nav class="hidden md:flex items-center gap-1">
                             <Link
                                 v-for="link in navLinks"
                                 :key="link.to"
@@ -81,33 +80,6 @@ const navLinks = [
                                 {{ link.label }}
                             </Link>
                         </nav>
-                        <!-- Authenticated: admin + logout -->
-                        <template v-if="isAuthenticated">
-                            <Link
-                                href="/admin"
-                                class="hidden md:flex items-center gap-2 px-4 py-2.5 rounded-full hover:bg-accent-50 transition-all duration-200 text-neutral-800"
-                            >
-                                <PhGearSix :size="18" weight="bold" />
-                                <span class="text-lg font-semibold">Dashboard</span>
-                            </Link>
-                            <button
-                                class="hidden md:flex items-center gap-2 px-4 py-2.5 rounded-full text-lg font-semibold text-red-500 hover:bg-red-50 transition-all duration-200"
-                                @click="handleLogout"
-                            >
-                                <PhSignOut :size="18" weight="bold" />
-                                <span>Logout</span>
-                            </button>
-                        </template>
-
-                        <!-- Unauthenticated: login button -->
-                        <Link
-                            v-if="!isAuthenticated"
-                            href="/login"
-                            class="hidden md:inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-secondary-500 text-white font-bold text-lg hover:-translate-y-0.5 hover:shadow-lg hover:shadow-secondary-300/40 active:translate-y-0 active:scale-[0.98] transition-all duration-200"
-                        >
-                            <PhSignIn :size="18" weight="bold" />
-                            Login
-                        </Link>
 
                         <!-- Mobile hamburger -->
                         <button
@@ -190,49 +162,7 @@ const navLinks = [
                             {{ link.label }}
                         </Link>
 
-                        <!-- Admin link (authenticated) -->
-                        <Link
-                            v-if="isAuthenticated"
-                            href="/admin"
-                            :class="[
-                                'flex items-center gap-3 px-5 py-3.5 rounded-3xl font-semibold text-lg transition-all duration-200',
-                                isActive('/admin')
-                                    ? 'bg-primary-100 text-neutral-800'
-                                    : 'text-neutral-500 hover:text-neutral-800 hover:bg-neutral-50',
-                            ]"
-                            @click="mobileMenuOpen = false"
-                        >
-                            <PhGearSix :size="20" :weight="isActive('/admin') ? 'fill' : 'regular'" />
-                            Dashboard
-                        </Link>
                     </nav>
-
-                    <!-- Auth section -->
-                    <div class="border-t-2 border-neutral-200 px-4 py-4 space-y-2">
-                        <template v-if="isAuthenticated">
-                            <div class="px-5 py-2 text-lg text-neutral-500">
-                                Welcome, {{ user?.name || 'User' }}
-                            </div>
-                            <button
-                                class="w-full flex items-center gap-3 px-5 py-3.5 rounded-3xl text-lg text-red-500 hover:bg-red-50 transition-colors font-semibold"
-                                @click="handleLogout"
-                            >
-                                <PhSignOut :size="20" weight="bold" />
-                                Logout
-                            </button>
-                        </template>
-
-                        <template v-else>
-                            <Link
-                                href="/login"
-                                class="w-full flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-secondary-500 text-white font-bold text-lg transition-all duration-200 hover:bg-secondary-600"
-                                @click="mobileMenuOpen = false"
-                            >
-                                <PhSignIn :size="18" weight="bold" />
-                                Login
-                            </Link>
-                        </template>
-                    </div>
                 </div>
             </Transition>
         </Teleport>
