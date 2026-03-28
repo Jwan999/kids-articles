@@ -60,28 +60,27 @@ const navLinks = [
                     <!-- Logo + Brand -->
                     <Link href="/" class="flex items-center gap-2">
                         <img src="/logo.png" alt="IoT KIDS" class="h-10 w-auto" />
-                        <span class="text-xl font-bold text-neutral-800">IoT KIDS</span>
+                        <span class="text-2xl font-bold text-neutral-800">IoT KIDS</span>
                     </Link>
 
-                    <!-- Desktop nav links (centered) -->
-                    <nav class="hidden md:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
-                        <Link
-                            v-for="link in navLinks"
-                            :key="link.to"
-                            :href="link.to"
-                            :class="[
-                                'px-5 py-2.5 rounded-full font-semibold text-lg transition-all duration-200',
-                                isActive(link.to)
-                                    ? 'bg-primary-100 text-neutral-800'
-                                    : 'text-neutral-500 hover:text-neutral-800 hover:bg-neutral-100',
-                            ]"
-                        >
-                            {{ link.label }}
-                        </Link>
-                    </nav>
-
-                    <!-- Actions -->
+                    <!-- Nav Links + Actions -->
                     <div class="flex items-center gap-3">
+                        <!-- Desktop nav links -->
+                        <nav class="hidden md:flex items-center gap-1 mr-2">
+                            <Link
+                                v-for="link in navLinks"
+                                :key="link.to"
+                                :href="link.to"
+                                :class="[
+                                    'px-5 py-2.5 rounded-full font-semibold text-lg transition-all duration-200',
+                                    isActive(link.to)
+                                        ? 'bg-primary-100 text-neutral-800'
+                                        : 'text-neutral-500 hover:text-neutral-800 hover:bg-neutral-100',
+                                ]"
+                            >
+                                {{ link.label }}
+                            </Link>
+                        </nav>
                         <!-- Authenticated: admin + logout -->
                         <template v-if="isAuthenticated">
                             <Link

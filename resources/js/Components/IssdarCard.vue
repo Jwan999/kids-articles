@@ -55,7 +55,7 @@ const formattedDate = computed(() => {
             <!-- Year badge -->
             <span
                 v-if="publishYear"
-                class="absolute top-2 start-2 bg-neutral-800/70 text-white rounded-full px-3 py-1 text-sm backdrop-blur-sm"
+                class="absolute top-3 start-3 bg-primary-500 text-neutral-800 rounded-full px-4 py-1.5 text-base font-bold"
             >
                 {{ publishYear }}
             </span>
@@ -64,43 +64,12 @@ const formattedDate = computed(() => {
         <!-- Content -->
         <div class="p-5 flex-1 flex flex-col">
             <!-- Title -->
-            <h3 class="text-xl font-bold text-neutral-800 mb-3 line-clamp-2">
+            <h3 class="text-xl font-bold text-neutral-800 mb-2 line-clamp-2">
                 {{ issdar.title }}
             </h3>
 
-            <!-- Date -->
-            <p
-                v-if="formattedDate"
-                class="text-neutral-400 text-base mb-3"
-            >
-                {{ formattedDate }}
-            </p>
-
-            <!-- Rating -->
-            <div class="flex items-center gap-0.5 mb-3">
-                <PhStar
-                    v-for="i in 5"
-                    :key="i"
-                    :size="18"
-                    :weight="i <= Math.round(rating) ? 'fill' : 'regular'"
-                    :class="i <= Math.round(rating) ? 'text-primary-500' : 'text-neutral-300'"
-                />
-            </div>
-
-            <!-- Stats -->
-            <div class="flex items-center gap-4 text-neutral-500 text-base mb-3">
-                <span class="flex items-center gap-1">
-                    <PhEye :size="16" />
-                    {{ issdar.views ?? 0 }}
-                </span>
-                <span class="flex items-center gap-1">
-                    <PhDownloadSimple :size="16" />
-                    {{ issdar.downloads ?? 0 }}
-                </span>
-            </div>
-
             <!-- Categories -->
-            <div v-if="issdar.categories?.length" class="flex flex-wrap gap-1.5 mt-auto">
+            <div v-if="issdar.categories?.length" class="flex flex-wrap gap-1.5 mb-6">
                 <span
                     v-for="category in issdar.categories"
                     :key="category.id"
@@ -108,6 +77,23 @@ const formattedDate = computed(() => {
                 >
                     {{ category.name }}
                 </span>
+            </div>
+
+            <!-- Stats + Date -->
+            <div class="flex items-center justify-between mt-auto">
+                <div class="flex items-center gap-4 text-neutral-500 text-base">
+                    <span class="flex items-center gap-1">
+                        <PhEye :size="16" />
+                        {{ issdar.views ?? 0 }}
+                    </span>
+                    <span class="flex items-center gap-1">
+                        <PhDownloadSimple :size="16" />
+                        {{ issdar.downloads ?? 0 }}
+                    </span>
+                </div>
+                <p v-if="formattedDate" class="text-neutral-400 text-base">
+                    {{ formattedDate }}
+                </p>
             </div>
         </div>
     </Link>

@@ -14,6 +14,7 @@ import {
     PhChatCircleDots,
     PhFilePdf,
     PhPlus,
+    PhArrowLeft,
 } from '@phosphor-icons/vue'
 import { computed, ref } from 'vue'
 
@@ -50,6 +51,15 @@ const reviewsList = computed(() => props.issdar.reviews || [])
 
     <div class="min-h-screen bg-neutral-100">
         <div class="max-w-7xl mx-auto px-6 py-8">
+
+            <!-- Back Button -->
+            <Link
+                href="/"
+                class="inline-flex items-center gap-2 text-neutral-500 hover:text-neutral-800 font-semibold text-lg mb-6 transition-colors"
+            >
+                <PhArrowLeft :size="20" />
+                Back
+            </Link>
 
             <!-- Issdar Header Card -->
             <div class="bg-white rounded-3xl border-2 border-accent-200 shadow-md p-8">

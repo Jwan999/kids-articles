@@ -5,16 +5,8 @@ const currentYear = new Date().getFullYear();
 </script>
 
 <template>
-    <footer class="relative overflow-hidden pt-16 bg-secondary-500">
-        <!-- Decorative floating circles -->
-        <div class="absolute inset-0 pointer-events-none overflow-hidden">
-            <div class="absolute top-20 right-24 w-32 h-32 bg-primary-500/15 rounded-full animate-float-gentle"></div>
-            <div class="absolute bottom-24 left-20 w-40 h-40 bg-white/10 rounded-full animate-float-slow"></div>
-            <div class="absolute top-1/3 left-1/3 w-16 h-16 bg-accent-500/15 rounded-full animate-float-gentle" style="animation-delay: 0.5s"></div>
-            <div class="absolute bottom-1/3 right-1/3 w-20 h-20 bg-white/15 rounded-full animate-float-slow" style="animation-delay: 1s"></div>
-        </div>
-
-        <div class="relative max-w-7xl mx-auto px-6">
+    <footer class="pt-16 bg-secondary-500">
+        <div class="max-w-7xl mx-auto px-6">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <!-- Brand Section -->
                 <div class="space-y-4">

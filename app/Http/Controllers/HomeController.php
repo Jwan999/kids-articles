@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Issdar;
 use App\Models\BannerGroup;
 use App\Models\Category;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -43,12 +44,19 @@ class HomeController extends Controller
             'totalCategories' => $categories->count(),
         ];
 
+        $topReviews = Review::with('issdar')
+            ->where('rating', 5)
+            ->latest()
+            ->take(6)
+            ->get();
+
         return Inertia::render('Home', [
             'banners' => $banners,
             'latestIssdarat' => $latestIssdarat,
             'popularIssdarat' => $popularIssdarat,
             'categories' => $categories,
             'stats' => $stats,
+            'topReviews' => $topReviews,
         ]);
     }
 }

@@ -9,8 +9,9 @@ import {
     PhFolders,
     PhEye,
     PhStar,
+    PhQuotes,
 } from '@phosphor-icons/vue'
-import { computed, ref } from 'vue'
+import { computed, ref, onMounted, onUnmounted } from 'vue'
 
 defineOptions({ layout: PublicLayout })
 
@@ -20,6 +21,7 @@ const props = defineProps({
     popularIssdarat: { type: Array, default: () => [] },
     categories: { type: Array, default: () => [] },
     stats: { type: Object, default: () => ({}) },
+    topReviews: { type: Array, default: () => [] },
 })
 
 const selectedCategory = ref(Number(new URLSearchParams(window.location.search).get('category')) || null)
@@ -43,6 +45,25 @@ const allIssdarat = computed(() => {
     }
     return combined
 })
+
+const currentReview = ref(0)
+let reviewInterval = null
+
+function startReviewCarousel() {
+    reviewInterval = setInterval(() => {
+        if (props.topReviews.length) {
+            currentReview.value = (currentReview.value + 1) % props.topReviews.length
+        }
+    }, 5000)
+}
+
+onMounted(() => {
+    startReviewCarousel()
+})
+
+onUnmounted(() => {
+    clearInterval(reviewInterval)
+})
 </script>
 
 <template>
@@ -64,29 +85,29 @@ const allIssdarat = computed(() => {
         </section>
 
         <!-- Quick Stats Section -->
-        <section class="border-y-2 border-neutral-200 py-8 px-6">
+        <section class="py-8 px-6">
             <div class="max-w-7xl mx-auto">
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-center">
                     <div>
-                        <div class="text-3xl md:text-4xl font-bold text-primary-500">
+                        <div class="text-3xl md:text-4xl font-bold text-neutral-800">
                             {{ stats.totalIssdarat ?? 0 }}
                         </div>
                         <div class="text-lg text-neutral-500">Issdarat</div>
                     </div>
                     <div>
-                        <div class="text-3xl md:text-4xl font-bold text-primary-500">
+                        <div class="text-3xl md:text-4xl font-bold text-neutral-800">
                             {{ stats.totalCategories ?? 0 }}
                         </div>
                         <div class="text-lg text-neutral-500">Categories</div>
                     </div>
                     <div>
-                        <div class="text-3xl md:text-4xl font-bold text-primary-500">
+                        <div class="text-3xl md:text-4xl font-bold text-neutral-800">
                             {{ stats.totalViews?.toLocaleString('en-US') ?? 0 }}
                         </div>
                         <div class="text-lg text-neutral-500">Views</div>
                     </div>
                     <div>
-                        <div class="text-3xl md:text-4xl font-bold text-primary-500">
+                        <div class="text-3xl md:text-4xl font-bold text-neutral-800">
                             {{ stats.totalDownloads?.toLocaleString('en-US') ?? 0 }}
                         </div>
                         <div class="text-lg text-neutral-500">Downloads</div>
@@ -150,6 +171,55 @@ const allIssdarat = computed(() => {
                     <p class="text-lg text-neutral-500">
                         No issdarat available
                     </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Top Reviews Section -->
+        <section v-if="topReviews.length" class="py-12 px-6">
+            <div class="max-w-7xl mx-auto">
+                <h2 class="text-3xl font-bold text-neutral-800 text-center mb-8">
+                    Top Reviews
+                </h2>
+                <div class="max-w-2xl mx-auto relative">
+                    <div
+                        v-for="(review, index) in topReviews"
+                        :key="review.id"
+                        class="transition-all duration-500"
+                        :class="index === currentReview ? 'opacity-100' : 'opacity-0 absolute inset-0'"
+                    >
+                        <div class="bg-white rounded-3xl border-2 border-accent-200 shadow-md p-8 text-center">
+                            <PhQuotes :size="36" weight="fill" class="text-primary-500 mx-auto mb-4" />
+                            <p class="text-xl text-neutral-600 leading-relaxed mb-6">
+                                {{ review.review }}
+                            </p>
+                            <div class="flex items-center justify-center gap-0.5 mb-3">
+                                <PhStar
+                                    v-for="i in 5"
+                                    :key="i"
+                                    :size="18"
+                                    weight="fill"
+                                    class="text-primary-500"
+                                />
+                            </div>
+                            <p class="font-bold text-neutral-800 text-lg">{{ review.name }}</p>
+                            <p v-if="review.issdar" class="text-base text-neutral-400">{{ review.issdar.title }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Dots -->
+                    <div class="flex items-center justify-center gap-2 mt-6">
+                        <span
+                            v-for="(_, index) in topReviews"
+                            :key="index"
+                            @click="currentReview = index"
+                            role="button"
+                            class="rounded-full transition-all duration-300 cursor-pointer inline-block"
+                            :class="index === currentReview
+                                ? 'w-5 h-2.5 bg-primary-500'
+                                : 'w-2.5 h-2.5 bg-neutral-300 hover:bg-neutral-400'"
+                        />
+                    </div>
                 </div>
             </div>
         </section>
