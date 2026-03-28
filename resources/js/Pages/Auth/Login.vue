@@ -21,7 +21,7 @@ function submit() {
             <div class="bg-white rounded-3xl border-2 border-primary-200 shadow-lg p-8">
                 <!-- Logo -->
                 <div class="mb-8 text-center">
-                    <img src="/logo.png" alt="IoT KIDS" class="mx-auto mb-3 h-16 w-16 object-contain" />
+                    <img src="/logo.png?v=2" alt="IoT KIDS" class="mx-auto mb-3 h-16 w-16 object-contain" />
                     <h1 class="text-2xl font-bold text-primary-700">
                         IoT KIDS
                     </h1>

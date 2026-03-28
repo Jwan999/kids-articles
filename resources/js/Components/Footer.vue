@@ -11,7 +11,7 @@ const currentYear = new Date().getFullYear();
                 <!-- Brand Section -->
                 <div class="space-y-4">
                     <div class="flex items-center gap-3">
-                        <img src="/logo.png" alt="IoT KIDS" class="w-12 h-12 object-contain" />
+                        <img src="/logo.png?v=2" alt="IoT KIDS" class="w-12 h-12 object-contain" />
                         <div class="flex flex-col">
                             <span class="text-2xl font-bold text-white">IoT KIDS</span>
                         </div>

@@ -67,7 +67,7 @@ function logout() {
                 <!-- Sidebar Header -->
                 <div class="flex items-center justify-between px-5 py-5 border-b border-neutral-200">
                     <div class="flex items-center gap-3">
-                        <img src="/logo.png" alt="IoT KIDS" class="h-10 w-10" />
+                        <img src="/logo.png?v=2" alt="IoT KIDS" class="h-10 w-10" />
                         <span class="text-lg font-bold text-primary-700">Dashboard</span>
                     </div>
                     <button

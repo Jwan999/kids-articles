@@ -59,7 +59,7 @@ const navLinks = [
                 <div class="flex items-center justify-between h-20">
                     <!-- Logo + Brand -->
                     <Link href="/" class="flex items-center gap-2">
-                        <img src="/logo.png" alt="IoT KIDS" class="h-10 w-auto" />
+                        <img src="/logo.png?v=2" alt="IoT KIDS" class="h-10 w-auto" />
                         <span class="text-2xl font-bold text-neutral-800">IoT KIDS</span>
                     </Link>
 
@@ -133,7 +133,7 @@ const navLinks = [
                     <!-- Header -->
                     <div class="flex items-center justify-between px-6 py-5 border-b-2 border-neutral-200">
                         <Link href="/" class="flex items-center gap-2" @click="mobileMenuOpen = false">
-                            <img src="/logo.png" alt="IoT KIDS" class="h-9 w-auto" />
+                            <img src="/logo.png?v=2" alt="IoT KIDS" class="h-9 w-auto" />
                             <span class="text-lg font-bold text-neutral-800">IoT KIDS</span>
                         </Link>
                         <button
