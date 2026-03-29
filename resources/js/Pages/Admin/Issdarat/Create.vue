@@ -144,6 +144,16 @@ function submit() {
                     <input type="file" accept=".pdf" class="hidden" @change="handleFile" />
                 </label>
                 <p v-if="form.errors.file" class="mt-1 text-base text-red-500">{{ form.errors.file }}</p>
+                <div class="mt-2 bg-accent-50 border border-accent-200 rounded-xl px-4 py-3">
+                    <p class="text-base text-neutral-600">
+                        <span class="font-semibold text-neutral-700">Max file size: 100MB.</span>
+                        If your PDF is larger, compress it first using one of these free tools (quality stays the same):
+                    </p>
+                    <div class="flex gap-4 mt-1.5">
+                        <a href="https://www.ilovepdf.com/compress_pdf" target="_blank" rel="noopener noreferrer" class="text-base font-semibold text-accent-600 hover:text-accent-700 underline">iLovePDF</a>
+                        <a href="https://smallpdf.com/compress-pdf" target="_blank" rel="noopener noreferrer" class="text-base font-semibold text-accent-600 hover:text-accent-700 underline">SmallPDF</a>
+                    </div>
+                </div>
             </div>
 
             <!-- Link -->
