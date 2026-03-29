@@ -69,7 +69,7 @@ const formattedDate = computed(() => {
             </h3>
 
             <!-- Categories -->
-            <div v-if="issdar.categories?.length" class="flex flex-wrap gap-1.5 mb-6">
+            <div v-if="issdar.categories?.length" class="flex flex-wrap gap-1.5 mb-3">
                 <span
                     v-for="category in issdar.categories"
                     :key="category.id"
@@ -77,6 +77,20 @@ const formattedDate = computed(() => {
                 >
                     {{ category.name }}
                 </span>
+            </div>
+
+            <!-- Rating -->
+            <div class="flex items-center gap-1.5 mb-3">
+                <div class="flex items-center gap-0.5">
+                    <PhStar
+                        v-for="i in 5"
+                        :key="i"
+                        :size="16"
+                        :weight="i <= Math.round(rating) ? 'fill' : 'regular'"
+                        :class="i <= Math.round(rating) ? 'text-primary-500' : 'text-neutral-300'"
+                    />
+                </div>
+                <span class="text-sm text-neutral-500">{{ rating > 0 ? rating.toFixed(1) : '' }}</span>
             </div>
 
             <!-- Stats + Date -->
