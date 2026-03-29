@@ -134,6 +134,16 @@ const reviewsList = computed(() => props.issdar.reviews || [])
                         <!-- Action buttons -->
                         <div class="flex gap-3 justify-end mt-auto">
                             <a
+                                v-if="issdar.file_url"
+                                :href="issdar.file_url"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="bg-accent-100 text-accent-700 rounded-full p-3 transition-all hover:shadow-lg"
+                                title="View PDF"
+                            >
+                                <PhEye :size="22" weight="bold" />
+                            </a>
+                            <a
                                 :href="'/issdar/' + issdar.id + '/download'"
                                 class="bg-primary-500 text-neutral-800 rounded-full p-3 transition-all hover:shadow-lg"
                                 title="Download"
