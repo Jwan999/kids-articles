@@ -59,6 +59,8 @@ function startReviewCarousel() {
 
 onMounted(() => {
     startReviewCarousel()
+    // Refresh data when navigating back so views/downloads stay current
+    router.reload({ only: ['latestIssdarat', 'popularIssdarat', 'stats', 'banners'] })
 })
 
 onUnmounted(() => {
