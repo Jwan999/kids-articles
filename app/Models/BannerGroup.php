@@ -16,6 +16,11 @@ class BannerGroup extends Model
     public function banners()
     {
         $ids = $this->banner_ids ?? [];
-        return Banner::whereIn('id', $ids)->get();
+        if (empty($ids)) {
+            return collect();
+        }
+        $banners = Banner::whereIn('id', $ids)->get();
+        // Preserve the order from banner_ids
+        return collect($ids)->map(fn ($id) => $banners->firstWhere('id', $id))->filter();
     }
 }

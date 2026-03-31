@@ -121,11 +121,13 @@ function toggleActive(banner) {
 
 // Banner Group (featured banners)
 const activeGroup = props.bannerGroups.find(g => g.is_active)
-const selectedBanners = ref(activeGroup?.banner_ids ?? [])
+const selectedBanners = ref((activeGroup?.banner_ids ?? []).map(Number))
 const savingGroup = ref(false)
+const groupError = ref(null)
 
 function toggleBannerSelection(bannerId) {
-    const index = selectedBanners.value.indexOf(bannerId)
+    const id = Number(bannerId)
+    const index = selectedBanners.value.indexOf(id)
     if (index > -1) {
         selectedBanners.value.splice(index, 1)
     } else {
@@ -133,11 +135,16 @@ function toggleBannerSelection(bannerId) {
             alert('You can select up to 3 banners maximum')
             return
         }
-        selectedBanners.value.push(bannerId)
+        selectedBanners.value.push(id)
     }
 }
 
 function saveBannerGroup() {
+    if (selectedBanners.value.length === 0) {
+        groupError.value = 'Please select at least one banner'
+        return
+    }
+    groupError.value = null
     savingGroup.value = true
     router.post('/admin/banners/group', {
         name: 'الرئيسية',
@@ -147,6 +154,12 @@ function saveBannerGroup() {
         preserveScroll: true,
         onFinish: () => {
             savingGroup.value = false
+        },
+        onError: (errors) => {
+            groupError.value = Object.values(errors).flat().join(', ')
+        },
+        onSuccess: () => {
+            groupError.value = null
         },
     })
 }
@@ -422,6 +435,8 @@ function saveBannerGroup() {
                     </div>
                 </div>
             </div>
+
+            <p v-if="groupError" class="text-center text-red-500 text-base py-2">{{ groupError }}</p>
 
             <p v-if="!banners.length" class="text-center text-neutral-400 text-lg py-4">
                 Add banners first to select featured banners

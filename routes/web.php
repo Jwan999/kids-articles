@@ -42,11 +42,11 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
     Route::get('/banners', [BannerController::class, 'index'])->name('banners.index');
+    Route::post('/banners/group', [BannerController::class, 'updateGroup'])->name('banners.group');
     Route::post('/banners', [BannerController::class, 'store'])->name('banners.store');
     Route::put('/banners/{id}', [BannerController::class, 'update'])->name('banners.update');
     Route::delete('/banners/{id}', [BannerController::class, 'destroy'])->name('banners.destroy');
     Route::patch('/banners/{id}/toggle', [BannerController::class, 'toggleActive'])->name('banners.toggle');
-    Route::post('/banners/group', [BannerController::class, 'updateGroup'])->name('banners.group');
 
     Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
     Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');

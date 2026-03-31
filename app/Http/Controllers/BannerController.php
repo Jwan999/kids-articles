@@ -106,7 +106,7 @@ class BannerController extends Controller
         BannerGroup::updateOrCreate(
             ['name' => $validated['name']],
             [
-                'banner_ids' => $validated['banner_ids'],
+                'banner_ids' => array_map('intval', $validated['banner_ids']),
                 'is_active' => $validated['is_active'] ?? true,
             ]
         );
