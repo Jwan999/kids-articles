@@ -193,6 +193,8 @@ class IssdarController extends Controller
         $issdar = Issdar::findOrFail($id);
         $issdar->increment('downloads');
 
-        return Storage::disk('public')->download($issdar->file_path, $issdar->title);
+        $extension = pathinfo($issdar->file_path, PATHINFO_EXTENSION) ?: 'pdf';
+
+        return Storage::disk('public')->download($issdar->file_path, $issdar->title . '.' . $extension);
     }
 }
