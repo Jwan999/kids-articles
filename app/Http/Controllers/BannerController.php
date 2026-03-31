@@ -99,17 +99,10 @@ class BannerController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'banner_ids' => 'required|array|max:3',
-            'banner_ids.*' => 'numeric',
             'is_active' => 'boolean',
         ]);
 
-        $bannerIds = array_map('intval', $validated['banner_ids']);
-
-        // Verify all banner IDs exist
-        $existingCount = Banner::whereIn('id', $bannerIds)->count();
-        if ($existingCount !== count($bannerIds)) {
-            return back()->withErrors(['banner_ids' => 'One or more selected banners no longer exist.']);
-        }
+        $bannerIds = collect($validated['banner_ids'])->map(fn ($id) => (int) $id)->values()->toArray();
 
         BannerGroup::updateOrCreate(
             ['name' => $validated['name']],
