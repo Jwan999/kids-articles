@@ -17,33 +17,29 @@ defineOptions({ layout: PublicLayout })
 
 const props = defineProps({
     banners: { type: Array, default: () => [] },
-    latestIssdarat: { type: Array, default: () => [] },
-    popularIssdarat: { type: Array, default: () => [] },
+    allIssdarat: { type: Array, default: () => [] },
     categories: { type: Array, default: () => [] },
     stats: { type: Object, default: () => ({}) },
     topReviews: { type: Array, default: () => [] },
 })
 
 const selectedCategory = ref(Number(new URLSearchParams(window.location.search).get('category')) || null)
+const showAll = ref(false)
 
 function filterByCategory(categoryId) {
     selectedCategory.value = categoryId
+    showAll.value = false
     router.get('/', categoryId ? { category: categoryId } : {}, {
         preserveState: true,
         preserveScroll: true,
     })
 }
 
-const allIssdarat = computed(() => {
-    const seen = new Set()
-    const combined = []
-    for (const a of [...props.latestIssdarat, ...props.popularIssdarat]) {
-        if (!seen.has(a.id)) {
-            seen.add(a.id)
-            combined.push(a)
-        }
+const visibleIssdarat = computed(() => {
+    if (showAll.value || props.allIssdarat.length <= 12) {
+        return props.allIssdarat
     }
-    return combined
+    return props.allIssdarat.slice(0, 12)
 })
 
 const currentReview = ref(0)
@@ -60,7 +56,7 @@ function startReviewCarousel() {
 onMounted(() => {
     startReviewCarousel()
     // Refresh data when navigating back so views/downloads stay current
-    router.reload({ only: ['latestIssdarat', 'popularIssdarat', 'stats', 'banners'] })
+    router.reload({ only: ['allIssdarat', 'stats', 'banners'] })
 })
 
 onUnmounted(() => {
@@ -157,14 +153,24 @@ onUnmounted(() => {
                     class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
                 >
                     <IssdarCard
-                        v-for="issdar in allIssdarat"
+                        v-for="issdar in visibleIssdarat"
                         :key="issdar.id"
                         :issdar="issdar"
                     />
                 </div>
 
+                <!-- See More Button -->
+                <div v-if="!showAll && allIssdarat.length > 12" class="mt-10 text-center">
+                    <button
+                        @click="showAll = true"
+                        class="rounded-full px-8 py-3 text-lg font-semibold border-2 border-neutral-200 bg-white text-neutral-600 hover:border-primary-400 hover:text-neutral-800 transition-all"
+                    >
+                        See More
+                    </button>
+                </div>
+
                 <!-- Empty state -->
-                <div v-else class="py-16 text-center">
+                <div v-else-if="!allIssdarat.length" class="py-16 text-center">
                     <PhArticle :size="48" weight="thin" class="mx-auto mb-4 text-neutral-500" />
                     <p class="text-lg text-neutral-500">
                         No issdarat available

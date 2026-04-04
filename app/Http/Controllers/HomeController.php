@@ -18,22 +18,14 @@ class HomeController extends Controller
             ? $bannerGroup->banners()->where('is_active', true)->values()
             : collect();
 
-        $latestQuery = Issdar::with('categories');
-        $popularQuery = Issdar::with('categories');
+        $issdaratQuery = Issdar::with('categories');
 
         if ($request->filled('category')) {
             $categoryId = $request->category;
-            $latestQuery->whereHas('categories', fn ($q) => $q->where('categories.id', $categoryId));
-            $popularQuery->whereHas('categories', fn ($q) => $q->where('categories.id', $categoryId));
+            $issdaratQuery->whereHas('categories', fn ($q) => $q->where('categories.id', $categoryId));
         }
 
-        $latestIssdarat = $latestQuery->orderByDesc('release_date')->take(8)->get();
-
-        $popularIssdarat = $popularQuery
-            ->withAvg('reviews', 'rating')
-            ->orderByDesc('reviews_avg_rating')
-            ->take(8)
-            ->get();
+        $allIssdarat = $issdaratQuery->orderByDesc('release_date')->get();
 
         $categories = Category::withCount('issdarat')->get();
 
@@ -52,8 +44,7 @@ class HomeController extends Controller
 
         return Inertia::render('Home', [
             'banners' => $banners,
-            'latestIssdarat' => $latestIssdarat,
-            'popularIssdarat' => $popularIssdarat,
+            'allIssdarat' => $allIssdarat,
             'categories' => $categories,
             'stats' => $stats,
             'topReviews' => $topReviews,
