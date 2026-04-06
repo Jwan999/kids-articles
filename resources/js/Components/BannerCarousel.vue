@@ -110,16 +110,16 @@ onUnmounted(() => {
                         <div class="absolute inset-0 bg-neutral-800/25" />
 
                         <!-- Text overlay -->
-                        <div class="absolute bottom-0 inset-x-0 p-6 sm:p-8">
+                        <div class="absolute inset-0 flex flex-col items-center justify-center p-6 sm:p-8 text-center">
                             <h2
                                 v-if="banners[currentIndex].title"
-                                class="text-2xl sm:text-3xl font-bold text-white mb-1"
+                                class="text-3xl sm:text-5xl font-bold text-white mb-2"
                             >
                                 {{ banners[currentIndex].title }}
                             </h2>
                             <p
                                 v-if="banners[currentIndex].subtitle"
-                                class="text-lg text-white/90"
+                                class="text-xl sm:text-2xl text-white/90"
                             >
                                 {{ banners[currentIndex].subtitle }}
                             </p>
