@@ -63,7 +63,7 @@ onUnmounted(() => {
 <template>
     <div
         v-if="banners.length"
-        class="carousel-wrapper relative overflow-hidden"
+        class="carousel-wrapper relative overflow-hidden rounded-2xl"
         @mouseenter="isPaused = true"
         @mouseleave="isPaused = false"
     >
@@ -107,7 +107,7 @@ onUnmounted(() => {
                         </div>
 
                         <!-- Dark overlay (solid semi-transparent) -->
-                        <div class="absolute inset-0 bg-neutral-800/50" />
+                        <div class="absolute inset-0 bg-neutral-800/25" />
 
                         <!-- Text overlay -->
                         <div class="absolute bottom-0 inset-x-0 p-6 sm:p-8">
