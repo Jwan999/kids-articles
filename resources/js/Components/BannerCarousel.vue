@@ -63,7 +63,7 @@ onUnmounted(() => {
 <template>
     <div
         v-if="banners.length"
-        class="carousel-wrapper relative overflow-hidden rounded-2xl"
+        class="carousel-wrapper relative overflow-hidden rounded-xl"
         @mouseenter="isPaused = true"
         @mouseleave="isPaused = false"
     >
@@ -132,18 +132,18 @@ onUnmounted(() => {
         <!-- Prev / Next arrows -->
         <template v-if="totalSlides > 1">
             <button
-                class="absolute start-3 top-1/2 -translate-y-1/2 bg-white hover:bg-primary-500 hover:text-white rounded-full p-3 shadow-lg transition-all z-10"
-                @click="next"
-                aria-label="Next"
-            >
-                <PhCaretRight :size="20" class="text-neutral-800" />
-            </button>
-            <button
-                class="absolute end-3 top-1/2 -translate-y-1/2 bg-white hover:bg-primary-500 hover:text-white rounded-full p-3 shadow-lg transition-all z-10"
+                class="group absolute start-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-primary-500 rounded-full p-3 shadow-lg transition-all z-10"
                 @click="prev"
                 aria-label="Previous"
             >
-                <PhCaretLeft :size="20" class="text-neutral-800" />
+                <PhCaretRight :size="20" class="text-neutral-800 group-hover:text-white transition-colors" />
+            </button>
+            <button
+                class="group absolute end-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-primary-500 rounded-full p-3 shadow-lg transition-all z-10"
+                @click="next"
+                aria-label="Next"
+            >
+                <PhCaretLeft :size="20" class="text-neutral-800 group-hover:text-white transition-colors" />
             </button>
         </template>
 

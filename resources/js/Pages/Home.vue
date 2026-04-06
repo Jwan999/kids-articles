@@ -68,8 +68,8 @@ onUnmounted(() => {
     <Head title="Home" />
 
     <div class="min-h-screen bg-neutral-100">
-        <!-- Banner Section (full width, no padding) -->
-        <section v-if="banners.length">
+        <!-- Banner Section -->
+        <section v-if="banners.length" class="px-4 sm:px-6 lg:px-8 pt-4">
             <BannerCarousel :banners="banners" />
         </section>
 
