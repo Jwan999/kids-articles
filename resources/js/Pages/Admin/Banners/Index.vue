@@ -131,10 +131,6 @@ function toggleBannerSelection(bannerId) {
     if (index > -1) {
         selectedBanners.value.splice(index, 1)
     } else {
-        if (selectedBanners.value.length >= 3) {
-            alert('You can select up to 3 banners maximum')
-            return
-        }
         selectedBanners.value.push(id)
     }
 }
@@ -394,7 +390,7 @@ function saveBannerGroup() {
             <div class="flex items-center justify-between mb-4">
                 <div>
                     <h2 class="text-xl font-bold text-neutral-800">Featured Banners</h2>
-                    <p class="text-base text-neutral-500 mt-1">Select up to 3 banners to display on the homepage</p>
+                    <p class="text-base text-neutral-500 mt-1">Select banners to display on the homepage</p>
                 </div>
                 <button
                     @click="saveBannerGroup"

@@ -98,7 +98,7 @@ class BannerController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'banner_ids' => 'required|array|max:3',
+            'banner_ids' => 'required|array',
             'is_active' => 'boolean',
         ]);
 
