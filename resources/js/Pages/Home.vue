@@ -118,7 +118,7 @@ onUnmounted(() => {
         <section class="py-12 px-6">
             <div class="max-w-7xl mx-auto">
                 <!-- Category filter pills -->
-                <div class="flex gap-3 overflow-x-auto pb-4 mb-8 scrollbar-hide" style="-webkit-overflow-scrolling: touch">
+                <div class="flex justify-center flex-wrap gap-3 pb-4 mb-8">
                     <button
                         @click="filterByCategory(null)"
                         class="shrink-0 rounded-full px-6 py-2.5 text-lg font-semibold border-2 transition-all"
